@@ -37,10 +37,9 @@
 
 }
 */
-
-
+//si agrego esta linea que esta debajo se me rompe el codigo, no se porque
+//let data = JSON.parse(localStorage.getItem('listaUsuarios'));
 let almacenados = new Array ();
-localStorage.setItem("listaUsuarios",almacenados);
 let btn_crear = document.getElementById('btn_crear');
 let nombre = document.getElementById('nombre');
 let apellido = document.getElementById('apellido');
@@ -49,6 +48,7 @@ let email = document.getElementById('email');
 //escuchar el evento del boton , se crea un objeto nuevo con el usuario
 btn_crear.addEventListener('click', ()=>{
 
+   
 agregarusuario();
 
 
@@ -57,36 +57,44 @@ agregarusuario();
 
 function agregarusuario(){
 
-if (validarusuario){
-    almacenados.push(new tecnico(nombre,apellido,email));
-   console.log(almacenados);
-    alert('Bienvenido ' + nombre.value + ' proximamente recibira un correo con nuestra lista actualizada');
+if (existeusuario){
+    
+    alert('El usario ya fue ingresado anteriormente');
+    
 }else{
 
-    alert('El usario ya fue ingresado anteriormente')
+    almacenados.push(new tecnico(nombre,apellido,email));
+    console.log(almacenados);
+    //si agrego estas lineas que estan debajo tambien se me rompe el codigo
+    //data=[...data,...almacenados] 
+    //localStorage.setItem('listaUsuarios', JSON.stringify(data));
+    //data = JSON.parse(localStorage.getItem('listaUsuarios'));
+    alert('Bienvenido ' + nombre.value + ' proximamente recibira un correo con nuestra lista actualizada');
+    mostrarusuarios();
+    
 }
 
 }
 
 // funcion que valida si el usuario ya fue ingresado anteriormente
-function validarusuario(){
+function existeusuario(){
 
-    let encontrado = false
+    let encontrado = false;
+    let nombrebusq = nombre.value;
     let i = 0;
    
-    while (!encontrado && i != almacenados.length ){
+    while ( !encontrado && i != almacenados.length ){
   
-      if (almacenados[i].nombre === nombre) {
+        if (almacenados[i].nombre === nombrebusq) {
   
-        return true;
-  
-      }
-  
-      i++;
-      encontrado = false;
-
-    }
-}
+            encontrado = true;
+      
+          }
+      
+          i++;
+          return encontrado;
+      
+    }}
 
 
 function validaradmin(){
@@ -100,7 +108,7 @@ function mostrarusuarios(){
     
     let mensaje = 'Los tecnicos registrados son:';
 
-     arreglo_tecnico.forEach(tecnico => {
+     almacenados.forEach(tecnico => {
         mensaje += '\n' + tecnico.mostrar_descripcion();
         
      });
