@@ -33,15 +33,13 @@ if (existeusuario){
     alert('Bienvenido ' + nombre.value + ' proximamente recibira un correo con nuestra lista actualizada');
     mostrarusuarios();
     
-}
-
-};
+}};
 
 // funcion que valida si el usuario ya fue ingresado anteriormente
 function existeusuario(){
 
     let encontrado = false;
-    let nombrebusq = this.nombre;
+    let nombrebusq = nombre.value;
     let i = 0;
    
     while ( !encontrado && i != almacenados.length ){
@@ -49,13 +47,12 @@ function existeusuario(){
         if (almacenados[i].nombre == nombrebusq) {
   
             encontrado = true ;
-            console.log('hola');
-
+            console.log('hola'); 
             return encontrado;
+           
 
-      
           }
-      
+          console.log('del while sale');
           i++;
           return encontrado;
       
@@ -93,4 +90,5 @@ function convertirdatos(){
         })
     };
 
-//agergar swetalerts y toastyfy
+//agergar swetalerts y toastyfy para confirmaciones
+//validar email valido , insertarlo en el html 
