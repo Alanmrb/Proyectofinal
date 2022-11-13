@@ -1,62 +1,58 @@
 
+let almacenados = [];
 let tecnicos = [];
-let almacenados = new Array ();
 let btn_crear = document.getElementById('btn_crear');
 let nombre = document.getElementById('nombre');
 let apellido = document.getElementById('apellido');
 let email = document.getElementById('email');
 
-//recuperamos datos del local o array vacio y lo guardamos
-convertirdatos(recuperardatos('listaUsuarios'));
-
-
-//escuchar el evento del boton , se crea un objeto nuevo con el usuario
-btn_crear.addEventListener('click', ()=>{
-
-   
-agregarusuario();
-
-
-} );
-
 //funcion que agrega al usuario validando si ya existe o no primero
 function agregarusuario(){
 
+existeusuario();   
 if (existeusuario){
     
     alert('El usario ya fue ingresado anteriormente');
+    console.log(tecnicos);
     
+
 }else{
-//si el usuario no existe, pushea el objeto nuevo en tecnicos y el mismo se guarda en local
+
+    //si el usuario no existe, pushea el objeto nuevo en tecnicos y el mismo se guarda en local
     tecnicos.push(new tecnico(nombre,apellido,email));
     localStorage.setItem('listaUsuarios', JSON.stringify(tecnicos));
     alert('Bienvenido ' + nombre.value + ' proximamente recibira un correo con nuestra lista actualizada');
     mostrarusuarios();
-    
 }};
 
 // funcion que valida si el usuario ya fue ingresado anteriormente
 function existeusuario(){
 
     let encontrado = false;
-    let nombrebusq = nombre.value;
     let i = 0;
-   
-    while ( !encontrado && i != almacenados.length ){
+    let nombre2 = nombre.value;
+    console.log('antes del while');
+
+    while ( !encontrado && i != tecnicos.length ){
+//consulta : 
+//tengo que parsear de vuelta local storage para que busque dentro de esos nombres? o como busco ?
+//porque si busco dentro del arreglo nuevo que estoy creando con el nombre, siempre va a devolver true
+
+        if (tecnicos[i].nombre == nombre2 ) {
   
-        if (almacenados[i].nombre == nombrebusq) {
-  
-            encontrado = true ;
+            encontrado = true;
             console.log('hola'); 
             return encontrado;
            
 
           }
-          console.log('del while sale');
+          
           i++;
+        }
+        console.log('del while sale');
           return encontrado;
       
-    }};
+};
 
 
 function validaradmin(){
@@ -73,7 +69,7 @@ function mostrarusuarios(){
     
     let mensaje = 'Los tecnicos registrados son:';
 
-     tecnicos.forEach(tecnico => {
+     almacenados.forEach(tecnico => {
         mensaje += '\n' + tecnico.mostrar_descripcion();
         
      });
@@ -81,14 +77,30 @@ function mostrarusuarios(){
     alert(mensaje);
 };
 
-function recuperardatos (msg){
+function recuperardatos(msg){
+         console.log('recuperadellocal');
          return JSON.parse(localStorage.getItem(msg)) || [];
+        
 };
-function convertirdatos(){
-        tecnicos.forEach(tecnico =>{
-            almacenados.push(new tecnico(nombre,apellido,email));
+function convertirdatos(almacenados){
+        console.log('conviertedatos');
+        almacenados.forEach(element => {
+            tecnicos.push(new tecnico(nombre,apellido,email));
         })
     };
 
 //agergar swetalerts y toastyfy para confirmaciones
 //validar email valido , insertarlo en el html 
+
+
+//escuchar el evento del boton , se crea un objeto nuevo con el usuario
+btn_crear.addEventListener('click', ()=>{
+    
+    convertirdatos(recuperardatos('listaUsuarios')); 
+    agregarusuario();
+    
+    
+    } );
+
+ //recuperamos datos del local o array vacio y lo guardamos
+  
