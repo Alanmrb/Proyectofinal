@@ -9,50 +9,49 @@ let email = document.getElementById('email');
 //funcion que agrega al usuario validando si ya existe o no primero
 function agregarusuario(){
 
-existeusuario();   
-if (existeusuario){
-    
-    alert('El usario ya fue ingresado anteriormente');
-    console.log(tecnicos);
-    
+        existeusuario();   
+        if (existeusuario){
+            
+            alert('El usario ya fue ingresado anteriormente');
+            console.log(tecnicos);
+            
 
-}else{
+        }else{
 
-    //si el usuario no existe, pushea el objeto nuevo en tecnicos y el mismo se guarda en local
-    tecnicos.push(new tecnico(nombre,apellido,email));
-    localStorage.setItem('listaUsuarios', JSON.stringify(tecnicos));
-    alert('Bienvenido ' + nombre.value + ' proximamente recibira un correo con nuestra lista actualizada');
-    mostrarusuarios();
-}};
+            //si el usuario no existe, pushea el objeto nuevo en tecnicos y el mismo se guarda en local
+            localStorage.setItem('listaUsuarios', JSON.stringify(tecnicos));
+            alert('Bienvenido ' + nombre.value + ' proximamente recibira un correo con nuestra lista actualizada');
+            mostrarusuarios();
+        }};
 
 // funcion que valida si el usuario ya fue ingresado anteriormente
 function existeusuario(){
 
-    let encontrado = false;
-    let i = 0;
-    let nombre2 = nombre.value;
-    console.log('antes del while');
+            let encontrado = false;
+            let i = 0;
+            let nombre2 = nombre.value;
+            console.log('antes del while');
 
-    while ( !encontrado && i != tecnicos.length ){
+            while ( !encontrado && i != tecnicos.length ){
 //consulta : 
 //tengo que parsear de vuelta local storage para que busque dentro de esos nombres? o como busco ?
 //porque si busco dentro del arreglo nuevo que estoy creando con el nombre, siempre va a devolver true
 
-        if (tecnicos[i].nombre == nombre2 ) {
-  
-            encontrado = true;
-            console.log('hola'); 
-            return encontrado;
-           
+            if (tecnicos[i].nombre == nombre2 ) {
+    
+                encontrado = true;
+                console.log('hola'); 
+                return encontrado;
+            
 
-          }
-          
-          i++;
-        }
-        console.log('del while sale');
-          return encontrado;
-      
-};
+            }
+            
+            i++;
+            }
+            console.log('del while sale');
+            return encontrado;
+        
+    };
 
 
 function validaradmin(){
@@ -69,7 +68,7 @@ function mostrarusuarios(){
     
     let mensaje = 'Los tecnicos registrados son:';
 
-     almacenados.forEach(tecnico => {
+     tecnicos.forEach(tecnico => {
         mensaje += '\n' + tecnico.mostrar_descripcion();
         
      });
@@ -103,4 +102,3 @@ btn_crear.addEventListener('click', ()=>{
     } );
 
  //recuperamos datos del local o array vacio y lo guardamos
-  
