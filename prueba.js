@@ -1,5 +1,4 @@
-
-let tecnicos = [];
+const loquehayenlocal = 'listaUsuarios';
 let almacenados = [];
 let btn_crear = document.getElementById('btn_crear');
 let nombre = document.getElementById('nombre');
@@ -9,30 +8,31 @@ let email = document.getElementById('email');
 //escuchar el evento del boton , se crea un objeto nuevo con el usuario
 btn_crear.addEventListener('click', () => {
 
-    recuperardatos('listaUsuarios');
+    recuperardatos();
     agregarusuario();
+    
 
 
 });
 
 //recuperamos datos del local o array vacio y lo guardamos
-function recuperardatos(msg) {
-    let almacenados =  JSON.parse(localStorage.getItem(msg)) ;
-
+function recuperardatos() {
+    let almacenados = JSON.parse(localStorage.getItem(loquehayenlocal)) ;
+    console.log(almacenados);
 };
 
 
 //funcion que agrega al usuario validando si ya existe o no primero
 function agregarusuario() {
-
-    if (almacenados.includes(nombre.value)) {
-
+     let nombrevalor = nombre.value;
+     console.log(almacenados);
+    if (almacenados.includes(nombrevalor)) {
+ 
         alert('El usario ya fue ingresado anteriormente');
         console.log(almacenados);
 
 
     } else {
-debugger;
 //si el usuario no existe, pushea el objeto nuevo en tecnicos y el mismo se guarda en local
         almacenados.push(new tecnico(nombre, apellido, email));
         localStorage.setItem('listaUsuarios', JSON.stringify(almacenados));
