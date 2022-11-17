@@ -1,24 +1,24 @@
 class tecnico {
 
     
-        constructor (nombre,apellido,mail){
+        constructor ( id,nombre,apellido,email){
     
             this.nombre = nombre.value;
             this.apellido = apellido.value;
-            this.mail = mail.value;
-            this.id = 1;
-        }
+            this.email = email.value;
+            this.id = id;
+        };
     
     
        
     
         mostrar_descripcion(){
     
-            return (this.id + " - " +this.nombre + " - " + this.apellido + " - " + this.mail) ;
+            return (this.id + " - " +this.nombre + " - " + this.apellido + " - " + this.email) ;
     
     
     
-        }
+        };
     
       
        
@@ -29,4 +29,4 @@ class tecnico {
         }
     
     
-    }
+    };
