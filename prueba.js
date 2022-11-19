@@ -1,5 +1,5 @@
 const loquehayenlocal = 'listaUsuarios';
-let almacenados = [];
+let almacenados = JSON.parse(localStorage.getItem(loquehayenlocal)) || [] ;
 let emailstecnicos = [];
 let tecnicos = [] ; 
 let btn_crear = document.getElementById('btn_crear');
@@ -10,7 +10,7 @@ let btnadmin = document.getElementById('btnadmin');
 
 btnadmin.addEventListener('click', () => {
 
-    validaradmin();
+    mostrarusuarios(almacenados);
     
 });
 
@@ -19,7 +19,7 @@ btnadmin.addEventListener('click', () => {
 //escuchar el evento del boton , se crea un objeto nuevo con el usuario
 btn_crear.addEventListener('click', () => {
 
-    recuperardatos();
+   
     agregarusuario();
     
 
@@ -28,7 +28,7 @@ btn_crear.addEventListener('click', () => {
 
 //recuperamos datos del local o array vacio y lo guardamos
 function recuperardatos() {
-    let almacenados = JSON.parse(localStorage.getItem(loquehayenlocal)) ;
+    let almacenados = JSON.parse(localStorage.getItem(loquehayenlocal)) || [] ;
     console.log(almacenados);
 };
 
@@ -47,8 +47,8 @@ function agregarusuario() {
 
     } else {
 //si el usuario no existe, pushea el objeto nuevo en tecnicos y el mismo se guarda en local
-        almacenados.push(new tecnico(getLastId(almacenados),nombre, apellido, email));
-        localStorage.setItem('listaUsuarios', JSON.stringify(almacenados));
+        tecnicos.push(new tecnico(getLastId(almacenados),nombre, apellido, email));
+        localStorage.setItem('listaUsuarios', JSON.stringify(tecnicos));
         Toastify({
             text: "Bienvenido " + nombre.value + " proximamente recibira un correo con nuestra lista actualizada",
             className: "info",
@@ -61,9 +61,11 @@ function agregarusuario() {
 };
 
 function validacion(){
-    let emailstecnicos = almacenados.map((tecnico) => {return (tecnico.email)});
-    console.log(emailstecnicos); 
-   if (emailstecnicos.includes(email.value)){
+    recuperardatos(almacenados);
+    let emailstecnicos = tecnicos.map((tecnico) => {return (tecnico.email)});
+    let emailstecnicos2 = almacenados.map((tecnico) => {return (tecnico.email)});
+    console.log(emailstecnicos,emailstecnicos2); 
+    if ((emailstecnicos.includes(email.value))||(emailstecnicos2.includes(email.value))){
      return true;
 
    }else{
@@ -74,13 +76,13 @@ function validacion(){
 
 
 //funcion que muestra los usuarios guardados en el local
-function mostrarusuarios() {
+function mostrarusuarios(almacenados) {
+//guardar en un json al admin y llamarlo con fetch
 
-
-    let mensaje = 'Los tecnicos registrados son:';
+    let mensaje = 'Los mails registrados son:';
 
     almacenados.forEach(tecnico => {
-        mensaje += '\n' + tecnico.mostrar_descripcion();
+        mensaje += '\n' + tecnico.email;
 
     });
 
@@ -88,13 +90,6 @@ function mostrarusuarios() {
     
 };
 
-function validaradmin() {
-    
-
-    mostrarusuarios();
-    //guardar en un json al admin y llamarlo con fetch   
-
-};
 
 //Funcion que busca el ultimo id y retorna un nuevo id +1
 function getLastId(almacenados) {
@@ -109,8 +104,4 @@ function getLastId(almacenados) {
 
 //agergar swetalerts y toastyfy para confirmaciones
 //validar email valido , insertarlo en el html 
-
-
-
-
 
