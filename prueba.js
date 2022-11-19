@@ -76,20 +76,44 @@ function validacion(){
 
 
 //funcion que muestra los usuarios guardados en el local
-function mostrarusuarios(almacenados) {
 //guardar en un json al admin y llamarlo con fetch
 
-    let mensaje = 'Los mails registrados son:';
+function mostrarusuarios(almacenados) {
 
-    almacenados.forEach(tecnico => {
-        mensaje += '\n' + tecnico.email;
+  
+let nombreIngresado =  prompt('ingrese su nombre de usuario');            
+let passIngresado = prompt('ingrese su pass');
 
-    });
 
-    Swal.fire(mensaje);
+fetch('admin.json')
+        .then((res)=> res.json())
+        .then((data)=> console.log(data))
+        .then((data)=> {
+            const recuperadode = data.map((data)=>data.nombre)
+        })
+        .then((recuperadode)=>{
+        if (recuperadode = nombreIngresado){
+            alert('bienvenido');
+        }    
+})};
+
+
+        
+         
+         /*if(nombreIngresado == nombreadmin ) {
+            let mensaje = 'Los mails registrados son:';
+
+            almacenados.forEach(tecnico => {
+                mensaje += '\n' + tecnico.email;
+             
+            })
+            alert(mensaje); 
+        }})
     
-};
+ } */
+        
 
+        
 
 //Funcion que busca el ultimo id y retorna un nuevo id +1
 function getLastId(almacenados) {
@@ -102,6 +126,6 @@ function getLastId(almacenados) {
     return maxValue + 1;
   }
 
-//agergar swetalerts y toastyfy para confirmaciones
+//cambiar los alert y los prompt
 //validar email valido , insertarlo en el html 
 
